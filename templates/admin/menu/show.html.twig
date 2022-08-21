@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <a class="btn btn-secondary mt-3" href="{{ path('zlotekarty_menu_list') }}">Back</a>
+    <h2>{{ menuElement.name }}</h2>
+    <p>Type: {{ menuElement.type }}</p>
+
+    {% if menuElement.pageId is empty %}
+        <p>Page Title: --- </p>
+    {% else %}
+        <p>Page Title: {{ menuElement.pageId.title }}</p>
+    {% endif %}
+
+    <p>
+        Href: {{ menuElement.href }}
+    </p>
+{% endblock %}

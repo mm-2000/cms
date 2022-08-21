@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h2>Pages list</h2>
+    <p>
+        <a class="btn btn-primary btn-lg" href="{{ path('zlotekarty_menu_create') }}">New Menu Link</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Page</th>
+                <th>Href</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for menuElement in menuElements %}
+            <tr>
+            <td>{{ menuElement.name }}</td>
+            <td>{{ menuElement.type }}</td>
+            {% if menuElement.pageId is empty %}
+                <td> --- </td>
+            {% else %}
+                <td>{{ menuElement.pageId.title }}</td>
+            {% endif %}
+
+            <td>{{ menuElement.href }}</td>
+
+            <td>
+                <a class="btn btn-secondary" href="{{ path('zlotekarty_menu_show', {id: menuElement.id}) }}">Show</a>
+                <a class="btn btn-secondary" href="{{ path('zlotekarty_menu_edit', {id: menuElement.id}) }}">Edit</a>
+                <form
+                    method="post" 
+                    action="{{ path('zlotekarty_menu_delete', {id: menuElement.id}) }}"
+                    onsubmit="return confirm('Are you sure to delete?');"
+                    class="d-inline"
+                >
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ menuElement.id) }}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            </tr>            
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
+
+

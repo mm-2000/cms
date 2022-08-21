@@ -1,0 +1,41 @@
+        <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand" href="{{ path('zlotekarty_homepage') }}">Złote Karty</a>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                {% for menuElement in menuElements %}
+                    <li class="nav-item">
+                        {% if menuElement.type is same as('href') %}
+                            <a class="nav-link" href="{{ menuElement.href }}">{{ menuElement.name }}</a>
+                        {% else %}
+                            <a class="nav-link" href="{{ path('zlotekarty_page_show', {id: menuElement.pageId.id }) }}">{{ menuElement.name }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+
+
+
+
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('zlotekarty_admin_mainpage') }}">Admin</a>
+                    </li>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('zlotekarty_logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('zlotekarty_login') }}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+            </div>
+        </div>
+        </nav>

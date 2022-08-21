@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <a class="btn btn-secondary mt-3" href="{{ path('zlotekarty_admin_mainpage') }}">Back</a>
+    <h2>{{ page.title }}</h2>
+    <p>CATEGORY: {{ page.category.name }}</p>
+    <p>
+    TAGS: 
+    {% for tag in tags %}
+        {{ tag.name }},
+    {% endfor %}
+    </p>
+    <p>{{ page.createDateTime | date('d.m.Y h:i') }}</p>
+    <p>{{ page.user.username }}</p>
+    <p>
+        {{ page.content }}
+    </p>
+{% endblock %}
