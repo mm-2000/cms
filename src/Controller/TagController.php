@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/tag")
+ * @Route("admin/tag")
  */
 class TagController extends AbstractController
 {
@@ -37,6 +37,7 @@ class TagController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $tagRepository->add($tag, true);
 
+            $this->addFlash('info', "Success!");
             return $this->redirectToRoute('zlotekarty_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,8 +66,8 @@ class TagController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $tagRepository->add($tag, true);
-
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('info', "Success!");
             return $this->redirectToRoute('zlotekarty_tag_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -83,6 +84,7 @@ class TagController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$tag->getId(), $request->request->get('_token'))) {
             $tagRepository->remove($tag, true);
+            $this->addFlash('info', "Success!");
         }
 
         return $this->redirectToRoute('zlotekarty_tag_index', [], Response::HTTP_SEE_OTHER);

@@ -36,7 +36,7 @@ class MenuType extends AbstractType
                 },
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('save', SubmitType::class, [
+            ->add('Save', SubmitType::class, [
                 'attr' => ['class' => 'btn btn-primary mt-3'],
             ])
         ;

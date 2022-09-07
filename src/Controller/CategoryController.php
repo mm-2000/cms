@@ -65,7 +65,7 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $categoryRepository->add($category, true);
+            $this->getDoctrine()->getManager()->flush();
             $this->addFlash('info', "Success!");
             return $this->redirectToRoute('zlotekarty_category_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -82,7 +82,8 @@ class CategoryController extends AbstractController
     public function delete(Request $request, Category $category, CategoryRepository $categoryRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->request->get('_token'))) {
-            if(!empty($category->getPages())){
+            $pages = $category->getPages();
+            if(!$pages->isEmpty()){
                 $this->addFlash('info', "Can't delete it! Category contains pages!");
             }else{
                 $categoryRepository->remove($category, true);

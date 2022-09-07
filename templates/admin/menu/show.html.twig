@@ -3,7 +3,7 @@
 {% block body %}
 
     <a class="btn btn-secondary mt-3" href="{{ path('zlotekarty_menu_list') }}">Back</a>
-    <h2>{{ menuElement.name }}</h2>
+    <h2 class="menuName">{{ menuElement.name }}</h2>
     <p>Type: {{ menuElement.type }}</p>
 
     {% if menuElement.pageId is empty %}

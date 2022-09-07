@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use App\Entity\MenuElement;
 use App\Form\Menu\MenuType;
+use App\Repository\MenuElementRepository;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -31,7 +32,7 @@ class MenuController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="zlotekarty_menu_create")
+     * @Route("/new", name="zlotekarty_menu_create")
      */
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -48,7 +49,7 @@ class MenuController extends AbstractController
 
             $this->addFlash('info', "Success!");
 
-            return $this->redirectToRoute('zlotekarty_menu_show', [ 'id' => $menu->getId() ]);
+            return $this->redirectToRoute('zlotekarty_menu_list');
         }
 
         return $this->renderForm('admin/menu/new.html.twig', [
@@ -67,9 +68,9 @@ class MenuController extends AbstractController
     }
 
     /**
-     * @Route("/edit/{id}", name="zlotekarty_menu_edit", requirements={"id"="\d+"}, methods={"GET","POST"})
+     * @Route("/{id}/edit/", name="zlotekarty_menu_edit", requirements={"id"="\d+"}, methods={"GET","POST"})
      */
-    public function edit(Request $request, MenuElement $menu): Response
+    public function edit(Request $request, MenuElement $menu, MenuElementRepository $menuRepository): Response
     {
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
@@ -79,9 +80,7 @@ class MenuController extends AbstractController
 
             $this->addFlash('info', "Success!");
 
-            return $this->redirectToRoute('zlotekarty_menu_edit', [
-              'id' => $menu->getId()
-            ]);
+            return $this->redirectToRoute('zlotekarty_menu_list');
         }
         return $this->renderForm('admin/menu/edit.html.twig', [
            'form' => $form
